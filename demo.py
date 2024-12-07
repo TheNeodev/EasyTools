@@ -258,7 +258,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
         with gr.TabItem("Train"):
             with gr.Row():
                 with gr.Column():
-                    training_name = gr.Textbox(label="Name your model", value="My-Voice",placeholder="My-Voice")
+                    training_name = gr.Textbox(label="Name your model:", value="My-Voice",placeholder="My-Voice")
                     np7 = gr.Slider(
                         minimum=0,
                         maximum=config.n_cpu,
@@ -268,7 +268,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                         interactive=True,
                     )
                     sr2 = gr.Radio(
-                        label="Sampling Rate",
+                        label="Sampling Rate:",
                         choices=["40k", "32k"],
                         value="32k",
                         interactive=True,
@@ -289,18 +289,14 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                         visible=False,
                     )
                     dataset_folder = gr.Textbox(
-                        label="dataset folder", value='dataset'
+                        label="dataset folder:", value='dataset'
                     )
-                    easy_uploader = gr.Files(label="Drop your audio files here",file_types=['audio'])
-                    but1 = gr.Button("1. Process", variant="primary")
-                    info1 = gr.Textbox(label="Information", value="",visible=True)
-                    easy_uploader.upload(inputs=[dataset_folder],outputs=[],fn=lambda folder:os.makedirs(folder,exist_ok=True))
-                    easy_uploader.upload(
-                        fn=lambda files,folder: [shutil.copy2(f.name,os.path.join(folder,os.path.split(f.name)[1])) for f in files] if folder != "" else gr.Warning('Please enter a folder name for your dataset'),
-                        inputs=[easy_uploader, dataset_folder], 
-                        outputs=[])
+                    
+                    but1 = gr.Button("1. Process:", variant="primary")
+                    info1 = gr.Textbox(label="Information:", value="",visible=True)
+                    
                     gpus6 = gr.Textbox(
-                        label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2)",
+                        label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2):",
                         value=gpus,
                         interactive=True,
                         visible=F0GPUVisible,
@@ -312,7 +308,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                         minimum=0,
                         maximum=4,
                         step=1,
-                        label="Speaker ID",
+                        label="Speaker ID:",
                         value=0,
                         interactive=True,
                         visible=False
@@ -325,7 +321,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                     ) 
                 with gr.Column():
                     f0method8 = gr.Radio(
-                        label="F0 extraction method",
+                        label="F0 extraction method:",
                         choices=["pm", "harvest", "dio", "rmvpe", "rmvpe_gpu"],
                         value="rmvpe_gpu",
                         interactive=True,
@@ -336,8 +332,8 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                         interactive=True,
                         visible=F0GPUVisible,
                     )
-                    but2 = gr.Button("2. Extract Features", variant="primary")
-                    info2 = gr.Textbox(label="Information", value="", max_lines=8)
+                    but2 = gr.Button("2. Extract Features:", variant="primary")
+                    info2 = gr.Textbox(label="Information:", value="", max_lines=8)
                     f0method8.change(
                         fn=change_f0_method,
                         inputs=[f0method8],
