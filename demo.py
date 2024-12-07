@@ -56,8 +56,16 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                             inputs=[dropbox], 
                             outputs=[input_audio0])
                         
-                with gr.Column():
-                    with gr.Accordion("Change Index", open=False):
+                with gr.Column():    
+                    with gr.Accordion("General Settings", open=False):
+                        f0method0 = gr.Radio(
+                            label="Method",
+                            choices=["pm", "harvest", "crepe", "rmvpe"]
+                            if config.dml == False
+                            else ["pm", "harvest", "rmvpe"],
+                            value="rmvpe",
+                            interactive=True,
+                        )
                         file_index2 = gr.Dropdown(
                             label="Change Index",
                             choices=sorted(index_paths),
@@ -69,16 +77,6 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                             maximum=1,
                             label="Index Strength",
                             value=0.5,
-                            interactive=True,
-                        )
-                    vc_output2 = gr.Audio(label="Output")
-                    with gr.Accordion("General Settings", open=False):
-                        f0method0 = gr.Radio(
-                            label="Method",
-                            choices=["pm", "harvest", "crepe", "rmvpe"]
-                            if config.dml == False
-                            else ["pm", "harvest", "rmvpe"],
-                            value="rmvpe",
                             interactive=True,
                         )
                         filter_radius0 = gr.Slider(
@@ -137,8 +135,9 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                     )
             with gr.Row():
                 f0_file = gr.File(label="F0 Path", visible=False)
+            vc_output2 = gr.Audio(label="Output")
             with gr.Row():
-                vc_output1 = gr.Textbox(label="Information", placeholder="Welcome!",visible=False)
+                vc_output1 = gr.Textbox(label="Information", placeholder="output here!",visible=True)
                 but0.click(
                     vc.vc_single,  
                     [
