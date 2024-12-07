@@ -164,7 +164,6 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                     outputs=[spk_item, protect0, protect0, file_index2, file_index2],
                     api_name="infer_change_voice",
                 )
-        with gr.TabItem("Download Models"):
         
         with gr.TabItem("Train"):
             with gr.Row():
