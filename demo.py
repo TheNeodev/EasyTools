@@ -2,9 +2,9 @@ from original import *
 import shutil, glob
 
 
-with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue="zinc")) as app:
+with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="green",neutral_hue="zinc")) as app:
     with gr.Row():
-        gr.HTML("<img  src='file/a.png' alt='image'>")
+        gr.Markdown("# Neo RVC WebUI")
     with gr.Tabs():
         with gr.TabItem("Inference"):
             with gr.Row():
