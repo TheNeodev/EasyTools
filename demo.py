@@ -258,7 +258,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                 url = gr.Textbox(label="url")
                 model_name = gr.Textbox(label="Model name")
                 download_md = gr.Button("Download")
-                download_md.clixk(fn=download_from_url, inputs=[url,model_name], outputs=model_name)
+                download_md.click(fn=download_from_url, inputs=[url,model_name], outputs=model_name)
         with gr.TabItem("Train"):
             with gr.Row():
                 with gr.Column():
