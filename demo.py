@@ -1,8 +1,6 @@
 from original import *
 import shutil, glob
-from easyfuncs import download_from_url, CachedModels, whisperspeak, whisperspeak_on
-os.makedirs("dataset",exist_ok=True)
-model_library = CachedModels()
+
 
 with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue="zinc")) as app:
     with gr.Row():
@@ -33,13 +31,7 @@ with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue=
                             dropbox = gr.File(label="Drop your audio here & hit the Reload button.")
                         with gr.TabItem("Record"):
                             record_button=gr.Audio(source="microphone", label="OR Record audio.", type="filepath")
-                        with gr.TabItem("TTS (experimental)", visible=False if whisperspeak_on is None else True):
-                            with gr.Row():
-                                tts_text = gr.Textbox(label="Text to Speech", placeholder="Enter text to convert to speech")
-                            with gr.Row():
-                                tts_lang = gr.Radio(choices=["en","es","it","pt"],label="",value="en")
-                            with gr.Row():
-                                tts_button = gr.Button(value="Speak", variant="primary")
+                        
                     with gr.Row():
                         paths_for_files = lambda path:[os.path.abspath(os.path.join(path, f)) for f in os.listdir(path) if os.path.splitext(f)[1].lower() in ('.mp3', '.wav', '.flac', '.ogg')]
                         input_audio0 = gr.Dropdown(
@@ -63,15 +55,7 @@ with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue=
                             fn=lambda audio:audio.name,
                             inputs=[dropbox], 
                             outputs=[input_audio0])
-                        tts_button.click(
-                            fn=whisperspeak,
-                            inputs=[tts_text,tts_lang],
-                            outputs=[input_audio0],
-                            show_progress=True)
-                        tts_button.click(
-                            fn=lambda: {"choices":paths_for_files('audios'),"__type__":"update"},
-                            inputs=[],
-                            outputs=[input_audio0])
+                        
                 with gr.Column():
                     with gr.Accordion("Change Index", open=False):
                         file_index2 = gr.Dropdown(
@@ -181,23 +165,7 @@ with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue=
                     api_name="infer_change_voice",
                 )
         with gr.TabItem("Download Models"):
-            with gr.Row():
-                url_input = gr.Textbox(label="URL to model", value="",placeholder="https://...", scale=6)
-                name_output = gr.Textbox(label="Save as", value="",placeholder="MyModel",scale=2)
-                url_download = gr.Button(value="Download Model",scale=2)
-                url_download.click(
-                    inputs=[url_input,name_output],
-                    outputs=[url_input],
-                    fn=download_from_url,
-                )
-            with gr.Row():
-                model_browser = gr.Dropdown(choices=list(model_library.models.keys()),label="OR Search Models (Quality UNKNOWN)",scale=5)
-                download_from_browser = gr.Button(value="Get",scale=2)
-                download_from_browser.click(
-                    inputs=[model_browser],
-                    outputs=[model_browser],
-                    fn=lambda model: download_from_url(model_library.models[model],model),
-                )
+        
         with gr.TabItem("Train"):
             with gr.Row():
                 with gr.Column():
@@ -215,7 +183,7 @@ with gr.Blocks(title="🔊",theme=gr.themes.Base(primary_hue="rose",neutral_hue=
                         choices=["40k", "32k"],
                         value="32k",
                         interactive=True,
-                        visible=False
+                        visible=True
                     )
                     if_f0_3 = gr.Radio(
                         label="Will your model be used for singing? If not, you can ignore this.",
