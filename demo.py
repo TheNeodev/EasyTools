@@ -98,8 +98,15 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
         gr.Markdown("# Neo RVC WebUI")
     with gr.Tabs():
         with gr.TabItem("Inference"):
-            with gr.Row():
-                voice_model = gr.Dropdown(label="Model Voice", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
+            with gr.Row()
+                with gr.Row():
+                        voice_model = gr.Dropdown(label="Model Voice", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
+                        file_index2 = gr.Dropdown(label="Change Index",choices=sorted(index_paths),interactive=True,value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else '')
+                        
+                            
+                            
+                            
+                            
                 refresh_button = gr.Button("Refresh", variant="primary")
                 spk_item = gr.Slider(
                     minimum=0,
@@ -157,12 +164,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                             value="rmvpe",
                             interactive=True,
                         )
-                        file_index2 = gr.Dropdown(
-                            label="Change Index",
-                            choices=sorted(index_paths),
-                            interactive=True,
-                            value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else ''
-                        )
+                        
                         index_rate1 = gr.Slider(
                             minimum=0,
                             maximum=1,
